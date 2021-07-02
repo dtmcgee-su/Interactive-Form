@@ -44,7 +44,7 @@ const checkBoxes = fieldSet.querySelectorAll('input');
 //console.log(checkBoxes);
 const totalElement = document.getElementById('activities-cost');
 const totalElementNoDollarSign = totalElement.textContent.replace(/[$,.\s]0/g, '');
-console.log(totalElement);
+//console.log(totalElement);
 fieldSet.addEventListener('change', (e) => {
     let total = 0;
 
@@ -60,5 +60,30 @@ fieldSet.addEventListener('change', (e) => {
     }
 });
 
-const paymentMehtod = document.querySelectorAll('.payment');
-//paymentMehtod.selected = 'selected';
+/******* PAYMENT INFO  *******/
+const paymentMehtod = document.querySelector('#payment');
+const paymentTypes = paymentMehtod.getElementsByTagName('option');
+const creditCardOption = paymentMehtod.getElementsByTagName('option')[1];
+creditCardOption.selected = 'selected';
+const creditCard = document.getElementById('credit-card');
+const paypal  = document.getElementById('paypal');
+const bitcoin = document.getElementById('bitcoin');
+paymentMehtod.addEventListener('change', (e) => {
+    //console.log(paymentTypes);
+    for (let i = 1; i < paymentTypes.length; i++) {
+        if (paymentTypes[1].selected) {
+            creditCard.style.display = 'block';
+            paypal.style.display = 'none';
+            bitcoin.style.display = 'none';
+        } else if (paymentTypes[2].selected) {
+            paypal.style.display = 'block';
+            creditCard.style.display = 'none';
+            bitcoin.style.display = 'none';
+        } else  {
+            bitcoin.style.display = 'block';
+            creditCard.style.display = 'none';
+            paypal.style.display = 'none';
+        }
+        }
+
+});
