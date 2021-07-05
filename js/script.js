@@ -1,7 +1,8 @@
 console.log('test');
 
-const name = document.getElementById("name");
-name.focus(); // Allows the name tab to be automatically selected
+
+const nameInput = document.getElementById("name");
+nameInput.focus(); // Allows the name tab to be automatically selected
 
 const title = document.getElementById('title');
 const otherJobRole = document.getElementById('other-job-role');
@@ -54,7 +55,7 @@ fieldSet.addEventListener('change', (e) => {
             let price = parseInt(checkBoxes[i].getAttribute('data-cost'));
             //console.log(price);
             total = (total + price);
-            //console.log(total);
+            console.log(total);
             totalElement.innerText = `$${total}`;
         }
     }
@@ -68,6 +69,8 @@ creditCardOption.selected = 'selected';
 const creditCard = document.getElementById('credit-card');
 const paypal  = document.getElementById('paypal');
 const bitcoin = document.getElementById('bitcoin');
+paypal.style.display = 'none';
+bitcoin.style.display = 'none';
 paymentMehtod.addEventListener('change', (e) => {
     //console.log(paymentTypes);
     for (let i = 1; i < paymentTypes.length; i++) {
@@ -87,3 +90,68 @@ paymentMehtod.addEventListener('change', (e) => {
         }
 
 });
+
+const email = document.getElementById('email');
+const creditCardNumber = document.getElementById('cc-num');
+const zipCode = document.getElementById('zip');
+const cvv = document.getElementById('cvv');
+const form = document.querySelector('form');
+const submit = document.querySelector('button');
+console.log(form);
+
+submit.addEventListener('click', (e) => {
+    const nameValue = nameInput.value;
+   // console.log(nameValue);
+   // https://stackoverflow.com/questions/2385701/regular-expression-for-first-and-last-name
+    const nameTest = /^[a-z ,.'-]+$/i.test(nameValue);
+    //console.log(nameTest);
+    const emailValue = email.value;
+    const emailTest = /^[^@]+@[^@.]+\.[a-z]+$/i.test(emailValue);
+    const creditCardValue = creditCardNumber.value;
+    const creditCardTest = /^[0-9]{9,13}$/.test(creditCardValue);
+    const zipCodeValue = zipCode.value;
+    const zipCodeTest = /^[0-9]{5}$/.test(zipCodeValue);
+    const cvvValue = cvv.value;
+    const cvvTest = /^[0-9]{3}$/.test(cvvValue);
+    // if (nameTest) {
+    //     console.log('worked');
+    // } else {
+    //     e.preventDefault();
+    //     console.log('failed');
+    // }
+    // if (emailTest) {
+    //     console.log('worked');
+    // } else {
+    //     e.preventDefault();
+    //     console.log('failed');
+    // }
+    // if (creditCardTest) {
+    //     console.log('worked');
+    // } else {
+    //     e.preventDefault();
+    //     console.log('failed');
+    // }
+    // if (zipCodeTest) {
+    //     console.log('worked');
+    // } else {
+    //     e.preventDefault();
+    //     console.log('failed');
+    // }
+    // if (cvvTest) {
+    //     console.log('worked');
+    // } else {
+    //     e.preventDefault();
+    //     console.log('failed');
+    // }
+    if (nameTest && emailTest && creditCardTest && zipCodeTest && cvvTest) {
+        console.log('worked');
+    } else {
+        e.preventDefault();
+        console.log('failed');
+    }
+});
+
+// const vailidName = (nameValue) => {
+//     return /[a-z]+/.test(nameValue);
+// }
+
