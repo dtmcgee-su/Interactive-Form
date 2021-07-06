@@ -46,19 +46,14 @@ const checkBoxes = fieldSet.querySelectorAll('input');
 const totalElement = document.getElementById('activities-cost');
 const totalElementNoDollarSign = totalElement.textContent.replace(/[$,.\s]0/g, '');
 //console.log(totalElement);
+let total = 0;
 fieldSet.addEventListener('change', (e) => {
-    let total = 0;
-
-    for (let i = 0; i < checkBoxes.length; i++) {
-        if (checkBoxes[i].checked == true) {
-            //console.log(checkBoxes[i]);
-            let price = parseInt(checkBoxes[i].getAttribute('data-cost'));
-            //console.log(price);
-            total = (total + price);
-            console.log(total);
-            totalElement.innerText = `$${total}`;
-        }
+    if (e.target.checked) {
+        total += parseInt(e.target.dataset.cost);
+    } else {
+        total -= parseInt(e.target.dataset.cost);
     }
+    totalElement.textContent = `Total: $${total}`;
 });
 
 /******* PAYMENT INFO  *******/
@@ -99,59 +94,61 @@ const form = document.querySelector('form');
 const submit = document.querySelector('button');
 console.log(form);
 
+//ENDED HERE 7/5 CHECL ASTERICK CLSS AND ASSIGN ALL TITLES FOR REQUIRED FIELDS
+const requiredTitles = document.querySelectorAll('.asterisk');
 submit.addEventListener('click', (e) => {
-    const nameValue = nameInput.value;
-   // console.log(nameValue);
-   // https://stackoverflow.com/questions/2385701/regular-expression-for-first-and-last-name
-    const nameTest = /^[a-z ,.'-]+$/i.test(nameValue);
-    //console.log(nameTest);
-    const emailValue = email.value;
-    const emailTest = /^[^@]+@[^@.]+\.[a-z]+$/i.test(emailValue);
-    const creditCardValue = creditCardNumber.value;
-    const creditCardTest = /^[0-9]{9,13}$/.test(creditCardValue);
-    const zipCodeValue = zipCode.value;
-    const zipCodeTest = /^[0-9]{5}$/.test(zipCodeValue);
-    const cvvValue = cvv.value;
-    const cvvTest = /^[0-9]{3}$/.test(cvvValue);
-    // if (nameTest) {
-    //     console.log('worked');
-    // } else {
-    //     e.preventDefault();
-    //     console.log('failed');
-    // }
-    // if (emailTest) {
-    //     console.log('worked');
-    // } else {
-    //     e.preventDefault();
-    //     console.log('failed');
-    // }
-    // if (creditCardTest) {
-    //     console.log('worked');
-    // } else {
-    //     e.preventDefault();
-    //     console.log('failed');
-    // }
-    // if (zipCodeTest) {
-    //     console.log('worked');
-    // } else {
-    //     e.preventDefault();
-    //     console.log('failed');
-    // }
-    // if (cvvTest) {
-    //     console.log('worked');
-    // } else {
-    //     e.preventDefault();
-    //     console.log('failed');
-    // }
-    if (nameTest && emailTest && creditCardTest && zipCodeTest && cvvTest) {
-        console.log('worked');
-    } else {
-        e.preventDefault();
-        console.log('failed');
+    e.preventDefault();
+    if (!nameRegex()){
+        requiredTitles[1].classList.add('not-valid', 'error-border');
+    }
+
+    if (!emailRegex()) {
+        requiredTitles[2].classList.add('not-valid', 'error-border');
+    }
+    if (!creditCardRegex()) {
+        requiredTitles[4].classList.add('not-valid', 'error-border');
+    }
+    if (!zipCodeRegex()) {
+        requiredTitles[5].classList.add('not-valid', 'error-border');
+    }
+    if (!cvvRegex()) {
+        requiredTitles[6].classList.add('not-valid', 'error-border');
+    }
+    
+    
+    if (paymentTypes[1].selected) {
+        if (creditCardRegex() && zipCodeRegex() && cvvTest()) {
+            console.log('credit card stuff worked');
+        } else {
+            console.log('credit card failed');
+        }
+    }
+    if (total === 0){
+        //activitesTitle.classList.add('not-valid');
     }
 });
 
-// const vailidName = (nameValue) => {
-//     return /[a-z]+/.test(nameValue);
-// }
+//REGEX FUNCTIONS
+const nameRegex = () => {
+    const nameValue = nameInput.value;
+   // https://stackoverflow.com/questions/2385701/regular-expression-for-first-and-last-name
+    return /^[a-z ,.'-]+$/i.test(nameValue);
+}
 
+const emailRegex = () => {
+    const emailValue = email.value;
+    return /^[^@]+@[^@.]+\.[a-z]+$/i.test(emailValue);
+}
+
+const creditCardRegex = () => {
+    const creditCardValue = creditCardNumber.value;
+    return /^[0-9]{13,16}$/.test(creditCardValue);
+}
+const zipCodeRegex = () => {
+    const zipCodeValue = zipCode.value;
+    return /^[0-9]{5}$/.test(zipCodeValue);
+}
+const cvvRegex = () => {
+    const cvvValue = cvv.value;
+    return /^[0-9]{3}$/.test(cvvValue);
+}
