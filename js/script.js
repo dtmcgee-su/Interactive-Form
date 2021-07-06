@@ -98,7 +98,7 @@ console.log(form);
 //ENDED HERE 7/5 CHECL ASTERICK CLSS AND ASSIGN ALL TITLES FOR REQUIRED FIELDS
 const requiredTitles = document.querySelectorAll('.asterisk');
 form.addEventListener('submit', (e) => {
-
+    checkAll();
     if (checkAll() === true) {
         window.location.reload();
     } else{
@@ -147,40 +147,62 @@ const cvvRegex = () => {
 }
 
 const checkAll = () => {
-    if (!nameRegex()){
-        requiredTitles[1].classList.add('not-valid', 'error-border');
+
+    // for (let i =1; i < 6; i++){
+
+    // }
+    if (!nameRegex()) {
+        requiredTitles[1].parentElement.classList.add('not-valid');
+        requiredTitles[1].nextElementSibling.nextElementSibling.classList.remove('hint');
     } else {
-        requiredTitles[1].classList.remove('not-valid', 'error-border');
+        requiredTitles[1].parentElement.classList.remove('not-valid');
+        requiredTitles[1].nextElementSibling.nextElementSibling.classList.add('hint');
     }
 
     if (!emailRegex()) {
-        requiredTitles[2].classList.add('not-valid', 'error-border');
+        requiredTitles[2].parentElement.classList.add('not-valid');
+        requiredTitles[2].nextElementSibling.nextElementSibling.classList.remove('hint');
     } else {
-        requiredTitles[2].classList.remove('not-valid', 'error-border');
+        requiredTitles[2].parentElement.classList.remove('not-valid');
+        requiredTitles[2].nextElementSibling.nextElementSibling.classList.add('hint');
     }
-
     if (total === 0) {
-        requiredTitles[3].classList.add('not-valid', 'error-border');
-
+        requiredTitles[3].parentElement.classList.add('not-valid');
     } else {
-        requiredTitles[3].classList.remove('not-valid', 'error-border');
+        requiredTitles[3].parentElement.classList.remove('not-valid');
     }
 
     if (!creditCardRegex()) {
-        requiredTitles[4].classList.add('not-valid', 'error-border');
+        requiredTitles[4].parentElement.classList.add('not-valid');
+        requiredTitles[4].nextElementSibling.nextElementSibling.classList.remove('hint');
     } else {
-        requiredTitles[4].classList.remove('not-valid', 'error-border');
+        requiredTitles[4].parentElement.classList.remove('not-valid');
+        requiredTitles[4].nextElementSibling.nextElementSibling.classList.add('hint');
     }
 
     if (!zipCodeRegex()) {
-        requiredTitles[5].classList.add('not-valid', 'error-border');
+        requiredTitles[5].parentElement.classList.add('not-valid');
+        requiredTitles[5].nextElementSibling.nextElementSibling.classList.remove('hint');
     } else {
-        requiredTitles[5].classList.remove('not-valid', 'error-border');
+        requiredTitles[5].parentElement.classList.remove('not-valid');
+        requiredTitles[5].nextElementSibling.nextElementSibling.classList.add('hint');
     }
 
     if (!cvvRegex()) {
-        requiredTitles[6].classList.add('not-valid', 'error-border');
+        requiredTitles[6].parentElement.classList.add('not-valid');
+        requiredTitles[6].nextElementSibling.nextElementSibling.classList.remove('hint');
     } else {
-        requiredTitles[6].classList.remove('not-valid', 'error-border');
+        requiredTitles[6].parentElement.classList.remove('not-valid');
+        requiredTitles[6].nextElementSibling.nextElementSibling.classList.add('hint');
     }
+    
 }
+
+for (let i = 3; i < 7; i++) {
+    fieldSet.addEventListener('focus', (e) => {
+        checkBoxes[i].parentElement.classList.add('focus');
+    });
+   fieldSet.addEventListener('blur', (e) => {
+        checkBoxes[i].parentElement.classList.remove('focus');
+    });
+};
