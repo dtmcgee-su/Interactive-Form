@@ -8,6 +8,7 @@ const title = document.getElementById('title');
 const otherJobRole = document.getElementById('other-job-role');
 
 //Remove 'Other Job Role' field if the user selects "Other" as a Job Role
+otherJobRole.style.display = 'none';
 title.addEventListener('change', (e) => {
     if (e.target.value !== 'other') {
         otherJobRole.style.display = 'none';
@@ -96,37 +97,29 @@ console.log(form);
 
 //ENDED HERE 7/5 CHECL ASTERICK CLSS AND ASSIGN ALL TITLES FOR REQUIRED FIELDS
 const requiredTitles = document.querySelectorAll('.asterisk');
-submit.addEventListener('click', (e) => {
-    e.preventDefault();
-    if (!nameRegex()){
-        requiredTitles[1].classList.add('not-valid', 'error-border');
-    }
+form.addEventListener('submit', (e) => {
 
-    if (!emailRegex()) {
-        requiredTitles[2].classList.add('not-valid', 'error-border');
-    }
-    if (!creditCardRegex()) {
-        requiredTitles[4].classList.add('not-valid', 'error-border');
-    }
-    if (!zipCodeRegex()) {
-        requiredTitles[5].classList.add('not-valid', 'error-border');
-    }
-    if (!cvvRegex()) {
-        requiredTitles[6].classList.add('not-valid', 'error-border');
+    if (checkAll() === true) {
+        window.location.reload();
+    } else{
+        e.preventDefault();
     }
     
-    
-    if (paymentTypes[1].selected) {
-        if (creditCardRegex() && zipCodeRegex() && cvvTest()) {
-            console.log('credit card stuff worked');
-        } else {
-            console.log('credit card failed');
-        }
-    }
-    if (total === 0){
-        //activitesTitle.classList.add('not-valid');
-    }
+
 });
+    
+    
+//     if (paymentTypes[1].selected) {
+//         if (creditCardRegex() && zipCodeRegex() && cvvTest()) {
+//             console.log('credit card stuff worked');
+//         } else {
+//             console.log('credit card failed');
+//         }
+//     }
+//     if (total === 0){
+//         //activitesTitle.classList.add('not-valid');
+//     }
+// });
 
 //REGEX FUNCTIONS
 const nameRegex = () => {
@@ -151,4 +144,43 @@ const zipCodeRegex = () => {
 const cvvRegex = () => {
     const cvvValue = cvv.value;
     return /^[0-9]{3}$/.test(cvvValue);
+}
+
+const checkAll = () => {
+    if (!nameRegex()){
+        requiredTitles[1].classList.add('not-valid', 'error-border');
+    } else {
+        requiredTitles[1].classList.remove('not-valid', 'error-border');
+    }
+
+    if (!emailRegex()) {
+        requiredTitles[2].classList.add('not-valid', 'error-border');
+    } else {
+        requiredTitles[2].classList.remove('not-valid', 'error-border');
+    }
+
+    if (total === 0) {
+        requiredTitles[3].classList.add('not-valid', 'error-border');
+
+    } else {
+        requiredTitles[3].classList.remove('not-valid', 'error-border');
+    }
+
+    if (!creditCardRegex()) {
+        requiredTitles[4].classList.add('not-valid', 'error-border');
+    } else {
+        requiredTitles[4].classList.remove('not-valid', 'error-border');
+    }
+
+    if (!zipCodeRegex()) {
+        requiredTitles[5].classList.add('not-valid', 'error-border');
+    } else {
+        requiredTitles[5].classList.remove('not-valid', 'error-border');
+    }
+
+    if (!cvvRegex()) {
+        requiredTitles[6].classList.add('not-valid', 'error-border');
+    } else {
+        requiredTitles[6].classList.remove('not-valid', 'error-border');
+    }
 }
