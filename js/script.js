@@ -41,7 +41,7 @@ const checkBoxes = fieldSet.querySelectorAll('input');
 const totalElement = document.getElementById('activities-cost');
 const totalElementNoDollarSign = totalElement.textContent.replace(/[$,.\s]0/g, '');
 let total = 0;
-
+// If activity is selected add its price to total, if activity is removed, remove price from total 
 fieldSet.addEventListener('change', (e) => {
     if (e.target.checked) {
         total += parseInt(e.target.dataset.cost);
@@ -61,6 +61,7 @@ const paypal = document.getElementById('paypal');
 const bitcoin = document.getElementById('bitcoin');
 paypal.style.display = 'none';
 bitcoin.style.display = 'none';
+//Hide all other payment options if one is selected
 paymentMehtod.addEventListener('change', (e) => {
     for (let i = 1; i < paymentTypes.length; i++) {
         if (paymentTypes[1].selected) {
@@ -86,8 +87,9 @@ const zipCode = document.getElementById('zip');
 const cvv = document.getElementById('cvv');
 const form = document.querySelector('form');
 const submit = document.querySelector('button');
-
 const requiredTitles = document.querySelectorAll('.asterisk');
+//If all Regex checks return true, submit form
+//Prevent form from loading if all Regex checks don't return true
 form.addEventListener('submit', (e) => {
     checkAll();
     if (checkAll() === true) {
@@ -121,7 +123,7 @@ const cvvRegex = () => {
     const cvvValue = cvv.value;
     return /^[0-9]{3}$/.test(cvvValue);
 }
-
+//Checking all Regex Functions
 const checkAll = () => {
 
     if (!nameRegex()) {
