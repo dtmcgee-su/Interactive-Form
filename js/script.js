@@ -1,6 +1,5 @@
 const nameInput = document.getElementById("name");
 nameInput.focus(); // Allows the name tab to be automatically selected
-
 const title = document.getElementById('title');
 const otherJobRole = document.getElementById('other-job-role');
 
@@ -19,7 +18,7 @@ const shirtDesign = document.getElementById('design');
 const shirtColor = document.getElementById('color');
 const shirtColorChildren = shirtColor.children;
 shirtColor.disabled = true;
-
+//Show shirt colors that match theme selected
 shirtDesign.addEventListener('change', (e) => {
     shirtColor.disabled = false;
     for (let i = 1; i < shirtColorChildren.length; i++) {
@@ -76,7 +75,6 @@ paymentMehtod.addEventListener('change', (e) => {
             paypal.style.display = 'none';
         }
     }
-
 });
 
 const email = document.getElementById('email');
@@ -92,7 +90,7 @@ form.addEventListener('submit', (e) => {
     e.preventDefault();
     checkAll();
     if (checkAll() === true) {
-       window.location.reload();
+        window.location.reload();
     } else {
         e.preventDefault();
     }
@@ -104,12 +102,10 @@ const nameRegex = () => {
     // https://stackoverflow.com/questions/2385701/regular-expression-for-first-and-last-name
     return /^[a-z ,.'-]+$/i.test(nameValue);
 }
-
 const emailRegex = () => {
     const emailValue = email.value;
     return /^[^@]+@[^@.]+\.[a-z]+$/i.test(emailValue);
 }
-
 const creditCardRegex = () => {
     const creditCardValue = creditCardNumber.value;
     return /^[0-9]{13,16}$/.test(creditCardValue);
@@ -122,60 +118,22 @@ const cvvRegex = () => {
     const cvvValue = cvv.value;
     return /^[0-9]{3}$/.test(cvvValue);
 }
+
 //Checking all Regex Functions
 const checkAll = () => {
+    regexTest(nameRegex(), 1);
+    regexTest(emailRegex(), 2);
+    regexTest(creditCardRegex(), 4);
+    regexTest(zipCodeRegex(), 5);
+    regexTest(cvvRegex(), 6);
 
-    if (!nameRegex()) {
-        requiredTitles[1].parentElement.classList.add('not-valid');
-        requiredTitles[1].nextElementSibling.nextElementSibling.classList.remove('hint');
-    } else {
-        requiredTitles[1].parentElement.classList.remove('not-valid');
-        requiredTitles[1].parentElement.classList.add('valid');
-        requiredTitles[1].nextElementSibling.nextElementSibling.classList.add('hint');
-    }
-
-    if (!emailRegex()) {
-        requiredTitles[2].parentElement.classList.add('not-valid');
-        requiredTitles[2].nextElementSibling.nextElementSibling.classList.remove('hint');
-    } else {
-        requiredTitles[2].parentElement.classList.remove('not-valid');
-        requiredTitles[2].parentElement.classList.add('valid');
-        requiredTitles[2].nextElementSibling.nextElementSibling.classList.add('hint');
-    }
     if (total === 0) {
         requiredTitles[3].parentElement.classList.add('not-valid');
     } else {
         requiredTitles[3].parentElement.classList.add('valid');
         requiredTitles[3].parentElement.classList.remove('not-valid');
     }
-    if (!creditCardRegex() && paymentTypes[1].selected) {
-        requiredTitles[4].parentElement.classList.add('not-valid');
-        requiredTitles[4].nextElementSibling.nextElementSibling.classList.remove('hint');
-    } else {
-        requiredTitles[4].parentElement.classList.remove('not-valid');
-        requiredTitles[4].parentElement.classList.add('valid');
-        requiredTitles[4].nextElementSibling.nextElementSibling.classList.add('hint');
-    }
 
-
-    if (!zipCodeRegex() && paymentTypes[1].selected) {
-        requiredTitles[5].parentElement.classList.add('not-valid');
-        requiredTitles[5].nextElementSibling.nextElementSibling.classList.remove('hint');
-    } else {
-        requiredTitles[5].parentElement.classList.remove('not-valid');
-        requiredTitles[5].parentElement.classList.add('valid');
-        requiredTitles[5].nextElementSibling.nextElementSibling.classList.add('hint');
-    }
-
-
-    if (!cvvRegex() && paymentTypes[1].selected) {
-        requiredTitles[6].parentElement.classList.add('not-valid');
-        requiredTitles[6].nextElementSibling.nextElementSibling.classList.remove('hint');
-    } else {
-        requiredTitles[6].parentElement.classList.remove('not-valid');
-        requiredTitles[6].parentElement.classList.add('valid');
-        requiredTitles[6].nextElementSibling.nextElementSibling.classList.add('hint');
-    }
     if (nameRegex() && emailRegex() && total != 0 && creditCardRegex() && zipCodeRegex() && cvvRegex() && paymentTypes[1].selected) {
         return true
     } else if (nameRegex() && emailRegex() && total != 0 && !paymentTypes[1].selected) {
@@ -195,3 +153,15 @@ for (let i = 0; i < activityOptions.length; i++) {
         activityOptions[i].parentElement.classList.remove('focus');
     });
 };
+
+//Regex Test Function
+const regexTest = (regex, num) => {
+    if (!regex) {
+        requiredTitles[num].parentElement.classList.add('not-valid');
+        requiredTitles[num].nextElementSibling.nextElementSibling.classList.remove('hint');
+    } else {
+        requiredTitles[num].parentElement.classList.remove('not-valid');
+        requiredTitles[num].parentElement.classList.add('valid');
+        requiredTitles[num].nextElementSibling.nextElementSibling.classList.add('hint');
+    }
+}
