@@ -49,9 +49,9 @@ fieldSet.addEventListener('change', (e) => {
 });
 
 /******* PAYMENT INFO  *******/
-const paymentMehtod = document.querySelector('#payment');
-const paymentTypes = paymentMehtod.getElementsByTagName('option');
-const creditCardOption = paymentMehtod.getElementsByTagName('option')[1];
+const paymentMethod = document.querySelector('#payment');
+const paymentTypes = paymentMethod.getElementsByTagName('option');
+const creditCardOption = paymentMethod.getElementsByTagName('option')[1];
 creditCardOption.selected = 'selected';
 const creditCard = document.getElementById('credit-card');
 const paypal = document.getElementById('paypal');
@@ -59,7 +59,7 @@ const bitcoin = document.getElementById('bitcoin');
 paypal.style.display = 'none';
 bitcoin.style.display = 'none';
 //Hide all other payment options if one is selected
-paymentMehtod.addEventListener('change', (e) => {
+paymentMethod.addEventListener('change', (e) => {
     for (let i = 1; i < paymentTypes.length; i++) {
         if (paymentTypes[1].selected) {
             creditCard.style.display = 'block';
@@ -87,11 +87,7 @@ const requiredTitles = document.querySelectorAll('.asterisk');
 //If all Regex checks return true, submit form
 //Prevent form from loading if all Regex checks don't return true
 form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    checkAll();
-    if (checkAll() === true) {
-        window.location.reload();
-    } else {
+    if (!checkAll()) {
         e.preventDefault();
     }
 });
