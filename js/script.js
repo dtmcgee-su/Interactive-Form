@@ -37,9 +37,8 @@ shirtDesign.addEventListener('change', (e) => {
 
 /******* REGISTER FOR ACTIVITIES SECTION  ******/
 const fieldSet = document.getElementById('activities');
-const checkBoxes = fieldSet.querySelectorAll('input');
+//const checkBoxes = fieldSet.querySelectorAll('input');
 const totalElement = document.getElementById('activities-cost');
-const totalElementNoDollarSign = totalElement.textContent.replace(/[$,.\s]0/g, '');
 let total = 0;
 // If activity is selected add its price to total, if activity is removed, remove price from total 
 fieldSet.addEventListener('change', (e) => {
@@ -61,18 +60,22 @@ const paypal = document.getElementById('paypal');
 const bitcoin = document.getElementById('bitcoin');
 paypal.style.display = 'none';
 bitcoin.style.display = 'none';
+// let creditCardChecked = true;
 //Hide all other payment options if one is selected
 paymentMehtod.addEventListener('change', (e) => {
     for (let i = 1; i < paymentTypes.length; i++) {
         if (paymentTypes[1].selected) {
+            // creditcardChecked = true;
             creditCard.style.display = 'block';
             paypal.style.display = 'none';
             bitcoin.style.display = 'none';
         } else if (paymentTypes[2].selected) {
+            // creditcardChecked = false;
             paypal.style.display = 'block';
             creditCard.style.display = 'none';
             bitcoin.style.display = 'none';
         } else {
+            // creditcardChecked = false;
             bitcoin.style.display = 'block';
             creditCard.style.display = 'none';
             paypal.style.display = 'none';
@@ -91,6 +94,7 @@ const requiredTitles = document.querySelectorAll('.asterisk');
 //If all Regex checks return true, submit form
 //Prevent form from loading if all Regex checks don't return true
 form.addEventListener('submit', (e) => {
+    e.preventDefault();
     checkAll();
     if (checkAll() === true) {
        window.location.reload();
@@ -149,8 +153,7 @@ const checkAll = () => {
         requiredTitles[3].parentElement.classList.add('valid');
         requiredTitles[3].parentElement.classList.remove('not-valid');
     }
-
-    if (!creditCardRegex()) {
+    if (!creditCardRegex() && paymentTypes[1].selected) {
         requiredTitles[4].parentElement.classList.add('not-valid');
         requiredTitles[4].nextElementSibling.nextElementSibling.classList.remove('hint');
     } else {
@@ -159,7 +162,8 @@ const checkAll = () => {
         requiredTitles[4].nextElementSibling.nextElementSibling.classList.add('hint');
     }
 
-    if (!creditCardRegex()) {
+
+    if (!zipCodeRegex() && paymentTypes[1].selected) {
         requiredTitles[5].parentElement.classList.add('not-valid');
         requiredTitles[5].nextElementSibling.nextElementSibling.classList.remove('hint');
     } else {
@@ -168,7 +172,8 @@ const checkAll = () => {
         requiredTitles[5].nextElementSibling.nextElementSibling.classList.add('hint');
     }
 
-    if (!cvvRegex()) {
+
+    if (!cvvRegex() && paymentTypes[1].selected) {
         requiredTitles[6].parentElement.classList.add('not-valid');
         requiredTitles[6].nextElementSibling.nextElementSibling.classList.remove('hint');
     } else {
@@ -176,8 +181,10 @@ const checkAll = () => {
         requiredTitles[6].parentElement.classList.add('valid');
         requiredTitles[6].nextElementSibling.nextElementSibling.classList.add('hint');
     }
-    if (nameRegex() && emailRegex() && total != 0 && creditCardRegex() && creditCardRegex() && cvvRegex()) {
+    if (nameRegex() && emailRegex() && total != 0 && creditCardRegex() && zipCodeRegex() && cvvRegex() && paymentTypes[1].selected) {
         return true
+    } else if (nameRegex() && emailRegex() && total != 0 && !paymentTypes[1].selected) {
+        return true;
     } else {
         false
     }
