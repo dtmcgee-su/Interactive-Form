@@ -37,7 +37,6 @@ shirtDesign.addEventListener('change', (e) => {
 
 /******* REGISTER FOR ACTIVITIES SECTION  ******/
 const fieldSet = document.getElementById('activities');
-//const checkBoxes = fieldSet.querySelectorAll('input');
 const totalElement = document.getElementById('activities-cost');
 let total = 0;
 // If activity is selected add its price to total, if activity is removed, remove price from total 
@@ -60,22 +59,18 @@ const paypal = document.getElementById('paypal');
 const bitcoin = document.getElementById('bitcoin');
 paypal.style.display = 'none';
 bitcoin.style.display = 'none';
-// let creditCardChecked = true;
 //Hide all other payment options if one is selected
 paymentMehtod.addEventListener('change', (e) => {
     for (let i = 1; i < paymentTypes.length; i++) {
         if (paymentTypes[1].selected) {
-            // creditcardChecked = true;
             creditCard.style.display = 'block';
             paypal.style.display = 'none';
             bitcoin.style.display = 'none';
         } else if (paymentTypes[2].selected) {
-            // creditcardChecked = false;
             paypal.style.display = 'block';
             creditCard.style.display = 'none';
             bitcoin.style.display = 'none';
         } else {
-            // creditcardChecked = false;
             bitcoin.style.display = 'block';
             creditCard.style.display = 'none';
             paypal.style.display = 'none';
